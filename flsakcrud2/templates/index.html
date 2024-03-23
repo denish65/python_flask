@@ -1,0 +1,154 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Flask Crud App</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Hello Index Templet</h1>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
+{% extends 'base.html' %}
+{% include 'hedaer.html' %}
+
+{% block title %} Flask CRUd {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="Jumbotron">
+        <!-- Button trigger modal -->
+
+        <br><br><br>
+        {% with messages = get_flashed_messages() %}
+        {% if messages%}
+         <div class="alert alert-success" >
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          {% for message in messages%}
+            {{message }}
+          {% endfor %}
+         </div>
+        {% endif %}
+        {% endwith %}
+        <br><br><br>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+{% for row in emp %}
+
+
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">{{row.id}}</td>
+              <td scope="row">{{row.name}}</td>
+              <td scope="row">{{row.email}}</td>
+              <td scope="row">{{row.phone}}</td>
+                <td scope="row">
+                    <a href="/update/{{row.id}}" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#EditstaticBackdrop{{row.id}}">Edi</a>
+                    |
+                    <a href="/delete/{{row.id}}" type="button" class="btn btn-danger" onclick="return confirm('are you sure to delete this data')">Delete</a>
+                </td>
+            </tr>
+            <div class="modal fade" id="EditstaticBackdrop{{row.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="EditstaticBackdropLabel">Edit Data </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Add your form here -->
+                    <form  action="{{url_for('update')}}" method="POST" >
+                      <div class="mb-3">
+                        <input type="text" id="id" name="id" value="{{ row.id}}" >
+                        <label for="field1" class="form-label">Name :</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{row.name}}">
+                      </div>
+                      <div class="mb-3">
+                        <label for="field2" class="form-label">Email:</label>
+                        <input type="text" class="form-control" id="email" name="email" value="{{row.email}}">
+                      </div>
+                      <div class="mb-3">
+                        <label for="field3" class="form-label">Phone :</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{row.phone}}">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">update</button>
+                  </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </tbody>
+<!-- <div class="modal"> -->
+      
+
+
+
+<!--Modal-->
+<!--Edit-->
+<!-- {% for row in emp %} -->
+
+<!-- </div> -->
+        </table>
+        <!-- {% endfor %} -->
+
+            <!--Modal-->
+<!--Add Data-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Data</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your form here -->
+        <form action="{{url_for('insert')}}" method="POST">
+          <div class="mb-3">
+            <label for="field1" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="field2" class="form-label">Email :</label>
+            <input type="text" class="form-control" id="email" name="email">
+          </div>
+          <div class="mb-3">
+            <label for="field3" class="form-label">Phone :</label>
+            <input type="text" class="form-control" id="phone" name="phone">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">submit</button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
+
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}
+
